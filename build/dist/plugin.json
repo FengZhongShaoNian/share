@@ -1,0 +1,33 @@
+{
+  "pluginName": "share",
+  "version": "0.0.1",
+  "description": "局域网文件分享",
+  "author": "2844126834@qq.com",
+  "homepage": "https://u.tools",
+  "main": "ui/index.html",
+  "logo": "ui/logo.png",
+  "preload": "ui/preload.js",
+  "platform": ["win32", "darwin", "linux"],
+  "pluginSetting": {
+    "single": true,
+    "height": 0
+  },
+  "features": [
+    {
+      "code": "94434e14-778b-417d-8fd5-392f70d14293",
+      "explain": "文件分享",
+      "platform": ["win32", "darwin", "linux"],
+      "cmds": [
+        "分享",
+        "文件分享",
+        "share",
+        {
+          "type": "files",
+          "label": "分享文件",
+          "fileType": "file",
+          "minNum": 1
+        }
+      ]
+    }
+  ]
+}

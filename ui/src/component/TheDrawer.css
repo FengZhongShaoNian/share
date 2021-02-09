@@ -1,0 +1,15 @@
+
+.root {
+    width: 360px;
+}
+
+.inputControl {
+    box-sizing: border-box;
+    width: 180px;
+}
+
+.divider {
+    margin-top: 22px;
+    margin-bottom: 22px;
+}
+

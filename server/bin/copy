@@ -1,0 +1,35 @@
+#!/usr/bin/env node
+
+/**
+ * Module dependencies.
+ */
+
+const fs = require('fs')
+const path = require('path')
+
+const srcFolder = path.resolve(__dirname, '../../web/dist')
+const destFolder = path.resolve(__dirname, '../public')
+
+function copyFolder (from, to) {
+  if (!fs.existsSync(to)) {
+    fs.mkdirSync(to)
+  }
+  const files = fs.readdirSync(from, { withFileTypes: true })
+  for (const file of files) {
+    if (file.isFile()) {
+      copyFile(path.join(from, file.name), path.join(to, file.name))
+      continue
+    } else if (file.isDirectory()) {
+      copyFolder(path.join(from, file.name), path.join(to, file.name))
+      continue
+    }
+  }
+}
+
+function copyFile (from, to) {
+  const readStream = fs.createReadStream(from)
+  const writeStream = fs.createWriteStream(to)
+  readStream.pipe(writeStream)
+}
+
+copyFolder(srcFolder, destFolder)

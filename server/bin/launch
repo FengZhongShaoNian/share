@@ -1,0 +1,12 @@
+#!/usr/bin/env node
+
+/**
+ * Module dependencies.
+ */
+
+const launch = require('../src/launcher')
+
+const port = 3000
+launch.start(port).then(function () {
+  console.log(`server is listening at http://localhost:${port}`)
+})

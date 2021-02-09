@@ -1,0 +1,12 @@
+
+.root {
+    position: fixed;
+    top: 64px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+}
+
+.listItem:hover{
+    background-color: rgba(0, 0, 0, .1);
+}

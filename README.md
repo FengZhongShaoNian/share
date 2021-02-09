@@ -16,14 +16,14 @@ share (IShare的升级版)是一个基于http的局域网文件分享插件（�
 
 ## 截图
 
-![](screenshots\1.png)
+![](https://gitee.com/fengzhongshaonian/share/raw/master/screenshots/1.png)
 
 
-![2](screenshots\2.png)
+![2](https://gitee.com/fengzhongshaonian/share/raw/master/screenshots/2.png)
 
 
-![3](screenshots\3.png)
+![3](https://gitee.com/fengzhongshaonian/share/raw/master/screenshots/3.png)
 
 
-![4](screenshots\4.png)
+![4](https://gitee.com/fengzhongshaonian/share/raw/master/screenshots/4.png)
 

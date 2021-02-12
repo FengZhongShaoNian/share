@@ -102,7 +102,9 @@ export default {
 </style>
 
 <style>
-html,body {
-  overflow-y: hidden;
+
+html::-webkit-scrollbar,body::-webkit-scrollbar {
+  width: 0 !important
 }
+
 </style>

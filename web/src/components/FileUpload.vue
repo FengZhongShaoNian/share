@@ -5,6 +5,7 @@
       class="floating-button"
       v-if="!upload.displayDialog"
       color="pink"
+      fixed
       dark
       small
       absolute

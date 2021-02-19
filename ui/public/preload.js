@@ -43,6 +43,7 @@ utools.onPluginEnter(({ code, type, payload, optional }) => {
 
   if (code === '94434e14-778b-417d-8fd5-392f70d14293') {
     if (type === 'files') {
+      const items = []
       for (const file of payload) {
         const item = {
           fileName: file.name,
@@ -51,8 +52,9 @@ utools.onPluginEnter(({ code, type, payload, optional }) => {
         item.icon = iconTool.getIconForFileName(file.name)
         console.log('item:', item)
 
-        shareList.addItem(item)
+        items.push(item)
       }
+      shareList.addAll(items)
       console.log('服务器的状态', launcher.isRunning() ? '运行中' : '未运行')
       // 自动启动分享服务
       if (!launcher.isRunning()) {

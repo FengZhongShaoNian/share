@@ -17,6 +17,23 @@ class ShareList {
     }
   }
 
+  addAll (items) {
+    if (items !== undefined && items instanceof Array) {
+      if (items.length === 0) return
+      const list = db.read().get('share-list').value()
+      for (const item of items) {
+        list.push(item)
+      }
+      db.set('share-list', list).write()
+
+      for (const callback of this.callableListeners) {
+        callback(this.getAllItems())
+      }
+      return
+    }
+    throw new Error('items must be an array')
+  }
+
   removeItem (itemId) {
     db.read().get('share-list').remove({ id: itemId }).write()
     for (const callback of this.callableListeners) {

@@ -1,5 +1,6 @@
 
 const { db } = require('../../server/app/index')
+const { uuid } = require('./uuid')
 
 class ShareList {
   constructor () {
@@ -22,6 +23,7 @@ class ShareList {
       if (items.length === 0) return
       const list = db.read().get('share-list').value()
       for (const item of items) {
+        item.id = uuid()
         list.push(item)
       }
       db.set('share-list', list).write()

@@ -54,7 +54,12 @@ utools.onPluginEnter(({ code, type, payload, optional }) => {
 
         items.push(item)
       }
-      shareList.addAll(items)
+      if (items.length > 1) {
+        shareList.addAll(items)
+      } else if (items.length === 1) {
+        shareList.addItem(items[0])
+      }
+
       console.log('服务器的状态', launcher.isRunning() ? '运行中' : '未运行')
       // 自动启动分享服务
       if (!launcher.isRunning()) {

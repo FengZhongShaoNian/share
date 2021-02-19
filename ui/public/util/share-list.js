@@ -7,7 +7,7 @@ class ShareList {
   }
 
   getAllItems () {
-    return db.read().get('share-list').value()
+    return db.read().get('share-list').value().reverse()
   }
 
   addItem (item) {

@@ -26,7 +26,7 @@
       </v-btn>
     </v-app-bar>
 
-    <v-main>
+    <v-main class="app-content app-content-scrollbar">
       <ShareList ref="shareList"/>
       <file-upload ref="fileUpload"></file-upload>
     </v-main>
@@ -99,12 +99,33 @@ export default {
   .app-title {
     margin-left: 28px;
   }
+
+  /*针对平板和PC 显示自定义的滚动条*/
+  @media screen and (min-width:600px){
+    .app-content {
+      height: 100vh;
+      overflow-y: auto;
+    }
+    /*垂直滚动条的宽度*/
+    .app-content-scrollbar::-webkit-scrollbar{
+      width: 10px !important
+    }
+    /*滚动条里面小方块*/
+    .app-content-scrollbar::-webkit-scrollbar-thumb{
+      background: #535353;
+    }
+    /*滚动条里面轨道*/
+    .app-content-scrollbar::-webkit-scrollbar-track {
+      background: transparent;
+    }
+  }
+
 </style>
 
 <style>
 
+/* 隐藏窗口滚动条 */
 html::-webkit-scrollbar,body::-webkit-scrollbar {
   width: 0 !important
 }
-
 </style>

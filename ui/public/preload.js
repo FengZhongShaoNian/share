@@ -76,9 +76,18 @@ utools.onPluginEnter(({ code, type, payload, optional }) => {
 
 // 窗口不可见的时候退出插件
 document.addEventListener('visibilitychange', function () {
+  console.log('document.hidden=', document.hidden)
   if (document.hidden && !window.preventPluginOut) {
-    utools.outPlugin()
-    console.log('退出插件.')
+    // macos 上utools存在一个诡异的bug
+    // 进入插件时，document.hidden先为true，然后再变为false
+    // 所以这里间隔200毫秒之后再来判断窗口是否可见
+    // 避免进入插件时出现闪退的情况
+    setTimeout(() => {
+      if (document.hidden && !window.preventPluginOut) {
+        utools.outPlugin()
+        console.log('退出插件.')
+      }
+    }, 200)
   }
 })
 

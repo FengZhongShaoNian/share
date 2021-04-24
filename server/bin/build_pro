@@ -1,0 +1,54 @@
+#!/usr/bin/env node
+
+const fs = require('fs')
+const path = require('path')
+const {copyFolder, copyFile} = require("./copy");
+
+const DIST_DIR = path.resolve(__dirname, '../dist')
+
+
+function emptyDirectory(directoryPath){
+  return new Promise((resolve, reject) => {
+    fs.rmdir(directoryPath, { recursive: true }, (err) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      resolve();
+    });
+  });
+}
+
+// 清空dist目录中的内容
+function emptyDistDir(){
+  return emptyDirectory(DIST_DIR)
+}
+
+// 将web模块的dist目录的文件拷贝到当前模块的dist/app/public目录下
+function copyWebDistFiles(){
+  const srcFolder = path.resolve(__dirname, '../../web/dist')
+  const destFolder = path.resolve(DIST_DIR, './app/public')
+
+  copyFolder(srcFolder, destFolder)
+}
+
+// 将当前模块的代码拷贝到dist/app目录下
+function copyAppSourceCode(){
+  const srcFolder = path.resolve(__dirname, '../src')
+  const destFolder = path.resolve(DIST_DIR, './app/src')
+
+  copyFolder(srcFolder, destFolder)
+  fs.mkdir(path.resolve(DIST_DIR, './app'), {recursive: true}, function (){
+    copyFile(
+        path.resolve(__dirname, '../index.js'),
+        path.resolve(DIST_DIR, './app/index.js'))
+  })
+}
+
+(function run() {
+  emptyDistDir()
+      .then(function (){
+        copyWebDistFiles()
+        copyAppSourceCode()
+      })
+})();

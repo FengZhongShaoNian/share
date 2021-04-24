@@ -1,1 +1,108 @@
-const{launcher}=require("../server/app/index"),iconTool=require("./util/file-icon"),config=require("./util/config"),shareList=require("./util/share-list"),network=require("./util/network"),utools=window.utools,shell={openInDirectory:function(o){utools.shellShowItemInFolder(o)},selectDirectory:function(){return utools.showOpenDialog({title:"选择文件夹",defaultPath:utools.getPath("downloads"),buttonLabel:"选择文件夹",properties:["openDirectory","createDirectory"]})}},clipboard={copyText:function(o){return utools.copyText(o)}};utools.onPluginEnter((({code:o,type:e,payload:t,optional:n})=>{if(console.log("用户进入插件"),console.log("code:",o),console.log("type:",e),console.log("payload:",t),console.log("optional:",n),"94434e14-778b-417d-8fd5-392f70d14293"===o)if("files"===e){const o=[];for(const e of t){const t={fileName:e.name,filePath:e.path};t.icon=iconTool.getIconForFileName(e.name),console.log("item:",t),o.push(t)}o.length>1?shareList.addAll(o):1===o.length&&shareList.addItem(o[0]),console.log("服务器的状态",launcher.isRunning()?"运行中":"未运行"),launcher.isRunning()||setTimeout((()=>{launcher.start(config.getPort())}),100)}else shareList.triggerListUpdate()})),document.addEventListener("visibilitychange",(function(){document.hidden&&!window.preventPluginOut&&(utools.outPlugin(),console.log("退出插件."))})),window.pluginApi={shell,clipboard,server:launcher,config,shareList,network};
+
+const { launcher } = require('../server/app/index')
+const iconTool = require('./util/file-icon')
+const config = require('./util/config')
+const shareList = require('./util/share-list')
+const network = require('./util/network')
+const utools = window.utools
+
+const shell = {
+  // 在文件夹中打开指定文件
+  openInDirectory: function (filePath) {
+    utools.shellShowItemInFolder(filePath)
+  },
+  // 打开文件夹选择对话框，选择文件夹
+  // 返回值为用户所选择的文件夹或者undefined
+  selectDirectory: function () {
+    return utools.showOpenDialog({
+      title: '选择文件夹',
+      defaultPath: utools.getPath('downloads'),
+      buttonLabel: '选择文件夹',
+      properties: [
+        'openDirectory', 'createDirectory'
+      ]
+    })
+  }
+}
+
+const clipboard = {
+  // 将文本拷贝到剪切板
+  // 拷贝成功返回true
+  // 失败返回false
+  copyText: function (text) {
+    return utools.copyText(text)
+  }
+}
+
+utools.onPluginEnter(({ code, type, payload, optional }) => {
+  console.log('用户进入插件')
+  console.log('code:', code)
+  console.log('type:', type)
+  console.log('payload:', payload)
+  console.log('optional:', optional)
+
+  // 解决ReferenceError: setImmediate is not defined
+  if (!global.setImmediate) {
+    global.setImmediate = function (fn) {
+      setTimeout(fn, 0)
+    }
+  }
+
+  if (code === '94434e14-778b-417d-8fd5-392f70d14293') {
+    if (type === 'files') {
+      const items = []
+      for (const file of payload) {
+        const item = {
+          fileName: file.name,
+          filePath: file.path
+        }
+        item.icon = iconTool.getIconForFileName(file.name)
+        console.log('item:', item)
+
+        items.push(item)
+      }
+      if (items.length > 1) {
+        shareList.addAll(items)
+      } else if (items.length === 1) {
+        shareList.addItem(items[0])
+      }
+
+      console.log('服务器的状态', launcher.isRunning() ? '运行中' : '未运行')
+      // 自动启动分享服务
+      if (!launcher.isRunning()) {
+        setTimeout(() => {
+          launcher.start(config.getPort())
+        }, 100)
+      }
+    } else {
+      // 刷新list
+      shareList.triggerListUpdate()
+    }
+  }
+})
+
+// 窗口不可见的时候退出插件
+document.addEventListener('visibilitychange', function () {
+  console.log('document.hidden=', document.hidden)
+  if (document.hidden && !window.preventPluginOut) {
+    // macos 上utools存在一个诡异的bug
+    // 进入插件时，document.hidden先为true，然后再变为false
+    // 所以这里间隔200毫秒之后再来判断窗口是否可见
+    // 避免进入插件时出现闪退的情况
+    setTimeout(() => {
+      if (document.hidden && !window.preventPluginOut) {
+        utools.outPlugin()
+        console.log('退出插件.')
+      }
+    }, 200)
+  }
+})
+
+window.pluginApi = {
+  shell,
+  clipboard,
+  server: launcher,
+  config,
+  shareList,
+  network
+}

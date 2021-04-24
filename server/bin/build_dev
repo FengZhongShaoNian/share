@@ -1,0 +1,9 @@
+#!/usr/bin/env node
+
+const {copyFolder, copyFile} = require("./copy");
+const path = require('path')
+
+const srcFolder = path.resolve(__dirname, '../../web/dist')
+const destFolder = path.resolve(__dirname, '../public')
+
+copyFolder(srcFolder, destFolder)

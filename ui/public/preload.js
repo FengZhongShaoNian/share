@@ -41,6 +41,13 @@ utools.onPluginEnter(({ code, type, payload, optional }) => {
   console.log('payload:', payload)
   console.log('optional:', optional)
 
+  // 解决ReferenceError: setImmediate is not defined
+  if (!global.setImmediate) {
+    global.setImmediate = function (fn) {
+      setTimeout(fn, 0)
+    }
+  }
+
   if (code === '94434e14-778b-417d-8fd5-392f70d14293') {
     if (type === 'files') {
       const items = []

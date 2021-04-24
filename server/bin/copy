@@ -7,12 +7,9 @@
 const fs = require('fs')
 const path = require('path')
 
-const srcFolder = path.resolve(__dirname, '../../web/dist')
-const destFolder = path.resolve(__dirname, '../public')
-
 function copyFolder (from, to) {
   if (!fs.existsSync(to)) {
-    fs.mkdirSync(to)
+    fs.mkdirSync(to, {recursive: true})
   }
   const files = fs.readdirSync(from, { withFileTypes: true })
   for (const file of files) {
@@ -32,4 +29,7 @@ function copyFile (from, to) {
   readStream.pipe(writeStream)
 }
 
-copyFolder(srcFolder, destFolder)
+module.exports = {
+  copyFolder,
+  copyFile
+}

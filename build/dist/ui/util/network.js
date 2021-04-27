@@ -1,1 +1,0 @@
-const os=require("os"),getAllNetCards=function(){const e=os.networkInterfaces(),t=[];for(const s in e)t.push(s);return t},getIpv4AddressByNetCard=function(e){const t=os.networkInterfaces()[e];if(t)for(const e of t)if(!e.internal&&"IPv4"===e.family&&"127.0.0.1"!==e.address)return e.address};module.exports={getAllNetCards,getIpv4AddressByNetCard};

@@ -13,11 +13,21 @@ share (IShare的升级版)是一个基于http的局域网文件分享插件（�
 - 局域网文件分享功能
 - 扫描二维码下载分享文件
 - 支持文件上传
+- 支持手工选择网卡，避免了获取IP地址错误的问题
 
 ## 编译说明
 
 编译方法： 直接在linux或者macOS下运行`build`模块下的`build_plgin.sh`.
 对于windows系统，可以在WSL中进行编译。
+```shell
+git clone https://gitee.com/fengzhongshaonian/share.git
+# 或者: git clone https://github.com/FengZhongShaoNian/share.git
+cd share
+git checkout nowebpack
+cd build
+chmod +x build_plugin.sh
+./build_plugin.sh
+```
 
 ## 截图
 

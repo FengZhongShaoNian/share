@@ -15,3 +15,7 @@ share (IShare的升级版)是一个基于http的局域网文件分享插件（�
 - 支持文件上传
 - 支持手工选择网卡，避免了获取IP地址错误的问题
 
+另外，本插件已经开源:
+
+[gitee仓库地址](https://gitee.com/fengzhongshaonian/share.git)
+[github仓库地址](https://github.com/FengZhongShaoNian/share.git)
